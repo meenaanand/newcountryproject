@@ -15,16 +15,16 @@ sudo: true
 before_install:
   - chmod +x mvnw
 
-script:
-- ./mvnw clean install -B
-- ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+# script:
+# - ./mvnw clean install -B
+# - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
 
 cache:
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-# script: "mvn test && mvn verify"
+script: "mvn test && mvn verify"
 notifications:
   slack: countrykirudiha:8UbnwbsvzlCIlXXoxZ6ZPNiu
    on_success: always
