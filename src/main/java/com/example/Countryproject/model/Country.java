@@ -12,8 +12,8 @@ public class Country{
     public Country(){}
     
     public Country(Long countryid,String countryname){
-        countryid=this.countryid;
-        countryname=this.countryname;
+       this.countryid=countryid;
+    this.countryname=countryname;
 
     }
     @Id
