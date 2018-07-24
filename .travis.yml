@@ -1,0 +1,24 @@
+addons:
+apt:
+packages:
+     - lynx
+language: java
+jdk: oraclejdk8
+
+addons:
+  sonarcloud:
+    organization: "meenaanand-github"
+    token:
+      secure: 498232f43d6da08733d32002266f098925f1403c
+
+sudo: true 
+before_install:
+  - chmod +x mvnw
+script: "mvn test && mvn verify"
+notifications:
+  slack: countrykirudiha:8UbnwbsvzlCIlXXoxZ6ZPNiu
+   on_success: always
+
+on_failure: always # default: always
+after_success:
+- bash <(curl -s https://codecov.io/bash)

@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "Countryproject",
+                "projectName": "Countryproject",
+                "workingDirectory": "d:\\kirudiha\\Countryproject",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "Countryproject",
+                "projectName": "Countryproject",
+                "workingDirectory": "d:\\kirudiha\\Countryproject",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

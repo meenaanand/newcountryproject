@@ -1,0 +1,135 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        names = [];
+        updateindex = 0;
+        var couname ;
+        var id ;
+        var url = "https://countryproject.herokuapp.com/country";
+        // var url = "http://localhost:9090/country";
+        function fetchall() {
+            // alert("fetch");
+            fetch(url)
+                .then(function parsing(response) {
+                    names = response.json();
+                    return names;
+                })
+                .then(function (names) {
+                    var html = "<table border='1|1' align='center'  >";
+                    for (var i = 0; i < names.length; i++) {
+                        var id = names[i].countryid;
+                        var couname = names[i].countryname;
+                        // alert(id);
+                        // alert("***********" +couname);
+                        html += "<tr >";
+                            html += "<td bgcolor=' #ccffff'>" + names[i].countryid + "</td>";
+                        html += "<td bgcolor='#66d9ff'>" + names[i].countryname + "</td>";
+                        html += '<td style="background-color:#ffff00" >  <button  onclick="edit(' + i +')" >Edit</button> </td>';
+                        html += '<td style="background-color:#ff3385"> <button onclick="del(' + id + ')"> Delete </button> </td>';
+                        html += "</tr>";
+                    }
+                    html += "</table>";
+                    document.getElementById("box").innerHTML = html;
+                }).catch(function (error) {
+                    console.log('Request failed', error);
+                });
+        }
+        function saveAndUpdate() {
+            ((document.getElementById('myBtn').innerHTML == "submit") ? this.add() : this.update());
+        }
+        function edit(i) {
+            document.getElementById('myBtn').innerHTML = "update";
+
+            fetch(url, { method: 'GET' })
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(function (names) {
+                   // alert(JSON.stringify(names));
+                    document.getElementById('name').value = names[i].countryname;
+
+                    updateindex = i+1 ;
+                })
+        }
+        function del(id) {
+            //   alert(id);
+            // var id=i+1;
+            fetch(url+"/" + id, {
+                    method: 'delete',
+                    mode: 'cors',
+                    redirect: 'follow'
+                  
+                }).then(res => res.json())
+                .then(res => console.log(res));
+            fetchall();
+        }
+
+       function add() { 
+            el = document.getElementById('name');
+            var name = el.value;
+            var person = new Object();
+                person.countryid = 0;
+                person.countryname = name;
+                if(name){
+fetch(url+"/test", {
+    method: "POST",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify(person)
+})
+    .then((response) => {
+
+        fetchall();
+        document.getElementById('name').value = '';
+    });
+                }
+
+}   function update() {
+    
+         alert(name);
+         fetch(url + updateindex, {
+             method: "POST",
+             headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json'
+             },
+
+             body: JSON.stringify({
+
+                 "countryname": document.getElementById("name").value
+             })
+
+         })
+
+             .then((response) => {
+                 document.getElementById('name').value = '';
+                 document.getElementById('myBtn').innerHTML = "submit";
+                 fetchall();
+             });
+     }
+    </script>
+</head>
+<body onload="fetchall()"><center>
+    <h2>  COUNTRY LIST</h2>
+</center>
+Enter the CountryName:
+    <input type="text" name="name" id="name">
+    <button type="submit" style="background: color #ffff14;"  id="myBtn" onclick="saveAndUpdate()">submit</button>
+    <!-- <button type="submit" value="(updateindex>0) ? 'Update' : 'Add' " onclick="updateindex>0 ? update() : add()">Add</button> -->
+    <p id="box"></p>
+</body>
+
+</html>
+
+</html>
+<!-- >>>>>>> 3c97756a8b031d8e8c17a83a2ac24dc6f7c6f530 -->
