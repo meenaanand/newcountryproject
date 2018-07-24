@@ -16,9 +16,25 @@ before_install:
   - chmod +x mvnw
 
 script: "mvn test && mvn verify"
+ - ./mvnw clean install -B
+ - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+
+# notifications:
+#   slack: countrykirudiha:8UbnwbsvzlCIlXXoxZ6ZPNiu
+#    on_success: always
+
+# on_failure: always # default: always
+# after_success:
+# - bash <(curl -s https://codecov.io/bash)
 
 after_success:
-       - if [ -f /home/travis/build/kirudiha/country-springboot-ajax/app/build/outputs/lint-results-debug.html ]; then lynx -dump /home/travis/build/kirudiha/country-springboot-ajax/app/build/outputs/lint-results-debug.html; fi
+       - if [ -f /home/travis/build/meenaanand/newcountryproject/app/build/outputs/lint-results-debug.html ]; then lynx -dump /home/travis/build/meenaanand/newcountryproject/app/build/outputs/lint-results-debug.html; fi
 
 
 
