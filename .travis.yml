@@ -13,6 +13,11 @@ services:
 - docker
 before_install:
 - chmod +x mvnw
+
+ notifications:
+  slack: countrykirudiha:8UbnwbsvzlCIlXXoxZ6ZPNiu
+  on_success: always
+
 script:
 - "./mvnw clean install -B"
 - "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar"
@@ -21,10 +26,10 @@ cache:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
 after_success:
-- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- docker login -u meenaanand -p 25081995a
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
   fi`
-- export IMAGE_NAME=sivaprasadreddy/freelancerkit
+- export IMAGE_NAME=meenaanand/newcountryproject
 - docker build -t $IMAGE_NAME:$COMMIT .
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME
@@ -33,6 +38,7 @@ env:
   - secure: UnDaA790vQ0wFKjn3KhMh+CsOzitaIr490uFkmThFWNKFC4jKWdoY1U/8lkAu4UydGVKAXzcZIiwUEy5/a6B7IQU6upl6yOY+5S7kv8GDQV8uKFEJ23d9vbHJ7sTwzdFHFYdHIySp4HDZo8u3VbKt4jOxQ5SZe79zvzkhrGWoXuZqg5dVuU9yhfNPWysj02eDs+9BCuWtBeVALpY62zoXQWoYLAdB3RKqbYYZb3X246aZKCkVxxCxZFo+dMMsBVfSrnBEl5GqxiXqE3AciWLoKyUoE1lvOHhzuEHGx8VXU75erRvXSkxjhI54KoA6vylS/HZc7VWdx7L707RH16YprscO9ZSgdjBwwRJAWR/jJgtvAavCwLkCCxIIZT2d6izlJe/Mum1JgxI6WRHKGMa3eUe1QDW25m5JtZX5eNluTjWcFZZ91EZ/biw3tWhZ0Q6dBD4aigOMsu2TgPnfuCXxtl+uTg5rEay8jpM6M8lK1smE5TGbXyZ+TGuAiwV6K0ISY9cg+zWkDxW2DGaggHzn6L8opSdw56YVHNISygC1ZKnu7r1pNzVrdzOF2ysDM7EbcEqK60xO/y+JrbmJbi6t0Kmgd/l1Hacf//PLWMi2lSNAgeP9x+ASAxNeEhK1OHaTMaye9OOMn/RHbkcpFf1n14g8Wh43kkz+xHEudKizDw=
   - secure: L62oLNgLUARzRNlEP/XHPxlsKI5YrSiWbY/GTqBQMd5KQfptVRVq2RGgJHfHe5+VYxUvqtAXx8IGW0iszN9e2XJtu0EKwPwf5mb+V7OPhTb5QyTBaGvZgFcf9sXk6ugCC5n8ZrD6acjCjKuGKxalXuzaK6Wh1dOBnhb3lLepqbHvObw4CYx53AC2vkbmsMvjzc8mS22iX5lDKrAuCoRyWryuKxSjTRaaMACWEX7zpTYK91SwV1IAiwyGVyna2wkUCqng3cO7V8gMI7nib5Uavob09Kgubqqq/lWOblq1DsWFN3PCPPfL49aaf7W8iC/rZiNTq1rVtN65V0M+m/rXVF4bqFcnNokX7nxw7ECyHgBuQr52U1hevFOTRrAvZQxqsAo1vWeSOWD01NKH8TYpqPRCdZPdoy2EbkWoUpeUEPkcuY2WpkaFFF77//QuazooTCJ8iWuVRNWm6r/bqE/zJmOCioTQmI3jtD88rCzOu2SuIHxg/rILYzUKycfd7Z9vIw+EhfwVuuoU/7NRvBoUX8gB7LWzs+I6iU+Oi9jw46qJlrxoBhjKI5+uyD3b7sNs3j/y3ZT6TdHwdnueDCoBw2VTf31+8rofpQp4cRm6SUdJKs3YT3AztVSOutI7PpzXUQx7gzSXM9i2VzWZ+inTR4E2rJfrB5gCgWMU2qAZR1I=
   - secure: 2QdWLdzKFVgZfm4cEc7QN+idndM2t6tQcosAfau4rZvHaZ0BshrJ82vik92n5aEVnphDCekmb0TGIxTCubTl9wskjASjo3Er/BcTuHxRnF3Q4YrwjLM2S2UklFaZ/adG55nE0vhpI5EP4Ipn7Hd5Lhyx8WCntrO01P6W6+Utmtopg1QcUyPShEmxkR0oPVyEyzHK84R0maBLsk5bXjntv2W1WMtDO8eO6h09+P/5YdvaAFiqD6nYCFv2yOsS5US6AggzsnuzQRRvsNM/Q/TjfLLaVzDx7f0lZArQg4MqK3nKkiYNchsmLX9Odw2zdgPqKLZEoasKlp3idhmvrkryTyHWbozY0nhFG4UvcsAr0T3Arcu7/oLw4MCW/qyjJqp9JZmnbuDJgPVCzpnM9nJAPrCRw9a9WPUZlpRaK6zQZcsmJNEn/zx5jiMzs6g4J9UkWzfcAKnA3ToFYfDfsJKxDMwyNqvBBjswc8ecwzsoT7xu3Z54nrnCY1H8kwPbEnOIhUFpEh9cjYsXxVqKgURwTIntFNh/XpP4ZI9R5t8WqrOnKpqA6UEluU9pM+Z0ioMSAGUMJ1NfMQY5hmUv+7MAqxD3s1wbXNW6pvR8DfebZDLiZVaHuHFXOL9fsysSHCdFo7g2xLBMhtqotZ55qAIZ//dkhU9Tks2oW9fwjYgg0F4=
+  - COMMIT=${TRAVIS_COMMIT::7}
 deploy:
   provider: heroku
   api_key: "$HEROKU_API_KEY"
