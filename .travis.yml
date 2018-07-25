@@ -42,4 +42,4 @@ after_success:
 
 deploy:
   provider: heroku
-  api_key: $HEROKU_API_KEY
+  api_key: a5487fdf-b264-4bb3-90b3-7adf72d6e3a6
