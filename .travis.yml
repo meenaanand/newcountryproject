@@ -13,6 +13,10 @@ env:
 git:
   depth: 500
 
+notifications:
+  slack: newcountryproject:RvXYQ1tKZdaO0APLQr2WExQ4
+  on_success: always
+
 addons:
   sonarcloud:
     organization: "meenaanand-github"
