@@ -26,7 +26,7 @@ cache:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
 after_success:
-- docker login -u meenaanand -p 25081995a
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
   fi`
 - export IMAGE_NAME=meenaanand/newcountryproject
